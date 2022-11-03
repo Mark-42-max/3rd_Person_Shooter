@@ -530,7 +530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.12186935, y: 0, z: 0, w: 0.99254614}
-  m_LocalPosition: {x: 1.8640678, y: 1.8336167, z: -3.3499334}
+  m_LocalPosition: {x: 0, y: 3.469219, z: -9.702957}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -962,6 +962,7 @@ MonoBehaviour:
   playerSpeed: 2
   sprintSpeed: 2
   jumpHeight: 1
+  sprintJumpHeight: 3
   gravityValue: -9.81
   rotateSpeed: 0.2
 --- !u!1 &1487078297
@@ -1106,15 +1107,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410915463048680064, guid: eaca2004578396e468694764d7f401d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8640678
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3410915463048680064, guid: eaca2004578396e468694764d7f401d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8336167
+      value: 3.469219
       objectReference: {fileID: 0}
     - target: {fileID: 3410915463048680064, guid: eaca2004578396e468694764d7f401d1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.3499334
+      value: -9.702957
       objectReference: {fileID: 0}
     - target: {fileID: 3410915463048680064, guid: eaca2004578396e468694764d7f401d1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1152,6 +1153,10 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 1410550156}
+    - target: {fileID: 3410915463048680065, guid: eaca2004578396e468694764d7f401d1, type: 3}
+      propertyPath: m_Transitions.m_BlendHint
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3410915463048680066, guid: eaca2004578396e468694764d7f401d1, type: 3}
       propertyPath: m_Name
       value: 3rd person CM
@@ -1168,7 +1173,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3410915462701067049, guid: eaca2004578396e468694764d7f401d1, type: 3}
   m_PrefabInstance: {fileID: 1576266431}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1870094900
+--- !u!114 &1870094905
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1188,9 +1193,9 @@ MonoBehaviour:
   m_YDamping: 1
   m_ZDamping: 1
   m_TargetMovementOnly: 1
-  m_ScreenX: 0.22
-  m_ScreenY: 0.48
-  m_CameraDistance: 3.44
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -1198,7 +1203,7 @@ MonoBehaviour:
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: -0.000000074505806
+  m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float sprintSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float sprintJumpHeight = 3.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotateSpeed = 0.8f;
 
@@ -73,6 +74,12 @@ public class PlayerController : MonoBehaviour
         if (jumpAction.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+
+        }
+        
+        if(jumpAction.triggered && groundedPlayer && sprintAction.IsPressed())
+        {
+            playerVelocity.y += Mathf.Sqrt(sprintJumpHeight * -3.0f * gravityValue);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;

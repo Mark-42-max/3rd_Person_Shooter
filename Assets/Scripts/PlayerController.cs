@@ -23,10 +23,13 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
+    private InputAction shootAction;
 
     private Transform cameraTransform;
 
-    private void Start()
+    private SwitchAimCam camScript;
+
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
@@ -35,6 +38,28 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         sprintAction = playerInput.actions["Sprint"];
+        shootAction = playerInput.actions["Shoot"];
+
+        camScript = GameObject.Find("Aim Cinemachine").GetComponent<SwitchAimCam>();
+    }
+
+    private void OnEnable()
+    {
+        shootAction.performed += _ => ShootBullet();
+    }
+
+    private void OnDisable()
+    {
+        shootAction.performed -= _ => ShootBullet();
+    }
+
+    private void ShootBullet()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+        {
+            Debug.Log(hit.collider.gameObject.name);
+        }
     }
 
     void Update()
@@ -61,6 +86,14 @@ public class PlayerController : MonoBehaviour
             controller.Move(playerSpeed * sprintSpeed * Time.deltaTime * move);
         }
         else if(input != Vector2.zero)
+        {
+            //rotate
+
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(0, cameraTransform.eulerAngles.y, 0));
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotateSpeed);
+            controller.Move(playerSpeed * Time.deltaTime * move);
+        }
+        else if (camScript.isAimed)
         {
             //rotate
 

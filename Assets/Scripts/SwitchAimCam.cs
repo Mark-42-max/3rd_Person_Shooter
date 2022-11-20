@@ -29,6 +29,8 @@ public class SwitchAimCam : MonoBehaviour
         thirdPersonCanvas.enabled = true;
         aimCanvas.enabled = false;
         isAimed = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     //private void Update()

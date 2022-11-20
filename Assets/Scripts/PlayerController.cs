@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintJumpHeight = 3.0f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotateSpeed = 0.8f;
+    [SerializeField] private float bulletNotHitDist = 25.0f;
+
+    [SerializeField] private Transform muzzle;
+    [SerializeField] private Transform bulletContainer;
 
     private PlayerInput playerInput;
 
@@ -28,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
 
     private SwitchAimCam camScript;
+
+    [SerializeField] private GameObject bulletPrefab;
 
     private void Awake()
     {
@@ -56,9 +62,17 @@ public class PlayerController : MonoBehaviour
     private void ShootBullet()
     {
         RaycastHit hit;
-        if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, muzzle.position, Quaternion.identity, bulletContainer);
+        BulletBehaviour behaviour = bullet.GetComponent<BulletBehaviour>();
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
         {
-            Debug.Log(hit.collider.gameObject.name);
+            behaviour.target = hit.point;
+            behaviour.hit = true;
+        }
+        else
+        {
+            behaviour.target = cameraTransform.position + cameraTransform.forward * bulletNotHitDist;
+            behaviour.hit = false;
         }
     }
 

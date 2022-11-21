@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDecal: {fileID: 1496693250460618692, guid: 0034fb502e857c048a1db0dc80da89e5, type: 3}
-  timeToDestroy: 3
+  timeToDestroy: 1
   speed: 60

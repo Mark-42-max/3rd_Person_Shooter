@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float rotateSpeed = 0.8f;
     [SerializeField] private float bulletNotHitDist = 25.0f;
+    [SerializeField] private float timeIntervalBetweenBullets = 15.0f;
+
+    private float currentTime = 1;
+
 
     [SerializeField] private Transform muzzle;
     [SerializeField] private Transform bulletContainer;
@@ -49,15 +53,15 @@ public class PlayerController : MonoBehaviour
         camScript = GameObject.Find("Aim Cinemachine").GetComponent<SwitchAimCam>();
     }
 
-    private void OnEnable()
-    {
-        shootAction.performed += _ => ShootBullet();
-    }
+    //private void OnEnable()
+    //{
+    //    shootAction.performed += _ => ShootBullet();
+    //}
 
-    private void OnDisable()
-    {
-        shootAction.performed -= _ => ShootBullet();
-    }
+    //private void OnDisable()
+    //{
+    //    shootAction.performed -= _ => ShootBullet();
+    //}
 
     private void ShootBullet()
     {
@@ -78,6 +82,30 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //shoot
+        if (shootAction.IsPressed())
+        {
+            if(currentTime % timeIntervalBetweenBullets == 0)
+            {
+                currentTime = 1;
+                ShootBullet();
+            }
+            else if(currentTime == 1)
+            {
+                ShootBullet();
+                currentTime += 1;
+            }
+            else
+            {
+                //Debug.Log("not time");
+                currentTime += 1;
+            }
+        }
+        else
+        {
+            currentTime = 1;
+        }
+
         //check if grounded
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)

@@ -32,5 +32,6 @@ public class BulletBehaviour : MonoBehaviour
         ContactPoint contact = collision.GetContact(0);
         GameObject decal = GameObject.Instantiate(bulletDecal, contact.point + contact.normal * 0.001f, Quaternion.LookRotation(contact.normal));
         Destroy(gameObject);
+        Destroy(decal, timeToDestroy);
     }
 }

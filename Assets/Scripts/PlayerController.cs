@@ -53,15 +53,15 @@ public class PlayerController : MonoBehaviour
         camScript = GameObject.Find("Aim Cinemachine").GetComponent<SwitchAimCam>();
     }
 
-    private void OnEnable()
-    {
-        shootAction.performed += _ => ShootBullet();
-    }
+    //private void OnEnable()
+    //{
+    //    shootAction.performed += _ => ShootBullet();
+    //}
 
-    private void OnDisable()
-    {
-        shootAction.performed -= _ => ShootBullet();
-    }
+    //private void OnDisable()
+    //{
+    //    shootAction.performed -= _ => ShootBullet();
+    //}
 
     private void ShootBullet()
     {
@@ -88,28 +88,28 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //shoot
-        //if (shootAction.IsPressed())
-        //{
-        //    if(currentTime % timeIntervalBetweenBullets == 0)
-        //    {
-        //        currentTime = 1;
-        //        ShootBullet();
-        //    }
-        //    else if(currentTime == 1)
-        //    {
-        //        ShootBullet();
-        //        currentTime += 1;
-        //    }
-        //    else
-        //    {
-        //        //Debug.Log("not time");
-        //        currentTime += 1;
-        //    }
-        //}
-        //else
-        //{
-        //    currentTime = 1;
-        //}
+        if (shootAction.IsPressed())
+        {
+            if (currentTime % timeIntervalBetweenBullets == 0)
+            {
+                currentTime = 1;
+                ShootBullet();
+            }
+            else if (currentTime == 1)
+            {
+                ShootBullet();
+                currentTime += 1;
+            }
+            else
+            {
+                //Debug.Log("not time");
+                currentTime += 1;
+            }
+        }
+        else
+        {
+            currentTime = 1;
+        }
 
         //check if grounded
         groundedPlayer = controller.isGrounded;

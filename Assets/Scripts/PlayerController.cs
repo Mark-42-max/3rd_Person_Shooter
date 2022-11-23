@@ -53,58 +53,63 @@ public class PlayerController : MonoBehaviour
         camScript = GameObject.Find("Aim Cinemachine").GetComponent<SwitchAimCam>();
     }
 
-    //private void OnEnable()
-    //{
-    //    shootAction.performed += _ => ShootBullet();
-    //}
+    private void OnEnable()
+    {
+        shootAction.performed += _ => ShootBullet();
+    }
 
-    //private void OnDisable()
-    //{
-    //    shootAction.performed -= _ => ShootBullet();
-    //}
+    private void OnDisable()
+    {
+        shootAction.performed -= _ => ShootBullet();
+    }
 
     private void ShootBullet()
     {
         RaycastHit hit;
         GameObject bullet = GameObject.Instantiate(bulletPrefab, muzzle.position, Quaternion.identity, bulletContainer);
-        BulletBehaviour behaviour = bullet.GetComponent<BulletBehaviour>();
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+        if (bullet.GetComponent<BulletBehaviour>() != null)
         {
-            behaviour.target = hit.point;
-            behaviour.hit = true;
-        }
-        else
-        {
-            behaviour.target = cameraTransform.position + cameraTransform.forward * bulletNotHitDist;
-            behaviour.hit = false;
+            BulletBehaviour behaviour = bullet.GetComponent<BulletBehaviour>();
+
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+            {
+                Debug.Log(hit.collider.gameObject.name);
+                behaviour.target = hit.point;
+                behaviour.hit = true;
+            }
+            else
+            {
+                behaviour.target = cameraTransform.position + cameraTransform.forward * bulletNotHitDist;
+                behaviour.hit = false;
+            }
         }
     }
 
     void Update()
     {
         //shoot
-        if (shootAction.IsPressed())
-        {
-            if(currentTime % timeIntervalBetweenBullets == 0)
-            {
-                currentTime = 1;
-                ShootBullet();
-            }
-            else if(currentTime == 1)
-            {
-                ShootBullet();
-                currentTime += 1;
-            }
-            else
-            {
-                //Debug.Log("not time");
-                currentTime += 1;
-            }
-        }
-        else
-        {
-            currentTime = 1;
-        }
+        //if (shootAction.IsPressed())
+        //{
+        //    if(currentTime % timeIntervalBetweenBullets == 0)
+        //    {
+        //        currentTime = 1;
+        //        ShootBullet();
+        //    }
+        //    else if(currentTime == 1)
+        //    {
+        //        ShootBullet();
+        //        currentTime += 1;
+        //    }
+        //    else
+        //    {
+        //        //Debug.Log("not time");
+        //        currentTime += 1;
+        //    }
+        //}
+        //else
+        //{
+        //    currentTime = 1;
+        //}
 
         //check if grounded
         groundedPlayer = controller.isGrounded;
@@ -135,7 +140,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotateSpeed);
             controller.Move(playerSpeed * Time.deltaTime * move);
         }
-        else if (camScript.isAimed)
+        else if (camScript.isAimed || shootAction.IsPressed())
         {
             //rotate
 
